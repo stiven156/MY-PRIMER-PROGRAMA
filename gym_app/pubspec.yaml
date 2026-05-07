@@ -1,0 +1,86 @@
+name: gym_app
+description: FitPro Manager - Plataforma Completa de Gestión de Gimnasios
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State Management
+  flutter_riverpod: ^2.5.1
+
+  # Navigation
+  go_router: ^14.2.7
+
+  # Charts
+  fl_chart: ^0.68.0
+
+  # Local Storage
+  shared_preferences: ^2.3.3
+
+  # Date/Time
+  intl: ^0.19.0
+
+  # Image
+  image_picker: ^1.1.2
+
+  # QR Code
+  qr_flutter: ^4.1.0
+
+  # Calendar
+  table_calendar: ^3.1.2
+
+  # Animations
+  flutter_animate: ^4.5.0
+  shimmer: ^3.0.0
+  lottie: ^3.1.2
+
+  # Progress Indicators
+  percent_indicator: ^4.2.3
+
+  # ID Generation
+  uuid: ^4.4.0
+
+  # Typography
+  google_fonts: ^6.2.1
+
+  # Spacing
+  gap: ^3.0.1
+
+  # Icons
+  font_awesome_flutter: ^10.7.0
+
+  # Swipeable Lists
+  flutter_slidable: ^3.1.0
+
+  # Badges
+  badges: ^3.1.2
+
+  # Timeline
+  timeline_tile: ^2.0.0
+
+  # Collections
+  collection: ^1.18.0
+
+  # Path
+  path_provider: ^2.1.4
+
+  # Dio HTTP
+  dio: ^5.5.0+1
+
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/icons/
