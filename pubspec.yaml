@@ -1,0 +1,62 @@
+name: mercados
+description: Sistema completo de gestion para supermercados con punto de venta, inventario, pedidos y app para clientes.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Estado
+  flutter_riverpod: ^2.5.1
+
+  # Navegacion
+  go_router: ^14.2.7
+
+  # Base de datos local
+  drift: ^2.20.2
+  sqlite3_flutter_libs: ^0.5.24
+  path_provider: ^2.1.4
+  path: ^1.9.0
+
+  # Backend / Auth
+  supabase_flutter: ^2.5.6
+
+  # UI
+  flutter_animate: ^4.5.0
+  fl_chart: ^0.68.0
+  cached_network_image: ^3.4.1
+  shimmer: ^3.0.0
+
+  # Utilidades
+  intl: ^0.19.0
+  uuid: ^4.4.2
+  shared_preferences: ^2.3.2
+  collection: ^1.18.0
+
+  # Escaner / Camara
+  mobile_scanner: ^5.2.3
+  image_picker: ^1.1.2
+
+  # Exportar
+  pdf: ^3.11.1
+  printing: ^5.13.2
+  excel: ^4.0.6
+
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  build_runner: ^2.4.11
+  drift_dev: ^2.20.2
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/icons/
