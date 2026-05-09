@@ -29,7 +29,13 @@ import 'package:mercados/features/client_app/screens/client_app_screen.dart';
 // ---------------------------------------------------------------------------
 
 /// Returns `true` when there is an active Supabase session.
-bool _isAuthenticated() => Supabase.instance.client.auth.currentSession != null;
+bool _isAuthenticated() {
+  try {
+    return Supabase.instance.client.auth.currentSession != null;
+  } catch (_) {
+    return false;
+  }
+}
 
 // ---------------------------------------------------------------------------
 // Router provider
@@ -317,16 +323,19 @@ class AppShell extends StatelessWidget {
 /// triggering GoRouter to re-evaluate its redirect logic.
 class _SupabaseAuthListenable extends ChangeNotifier {
   _SupabaseAuthListenable() {
-    _subscription = Supabase.instance.client.auth.onAuthStateChange.listen(
-      (_) => notifyListeners(),
-    );
+    try {
+      _subscription = Supabase.instance.client.auth.onAuthStateChange.listen(
+        (_) => notifyListeners(),
+      );
+    } catch (_) {
+      // Supabase no configurado — modo demo con datos de muestra
+    }
   }
 
-  late final Object _subscription;
+  Object? _subscription;
 
   @override
   void dispose() {
-    // The auth stream is managed by Supabase and does not need explicit cancel.
     super.dispose();
   }
 }
