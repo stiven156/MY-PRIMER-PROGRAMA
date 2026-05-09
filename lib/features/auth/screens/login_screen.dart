@@ -398,6 +398,28 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
           ),
         ),
 
+        const SizedBox(height: 12),
+
+        // Demo mode button
+        SizedBox(
+          width: double.infinity,
+          height: 48,
+          child: OutlinedButton.icon(
+            onPressed: authState.isLoading
+                ? null
+                : () {
+                    _emailController.text = 'admin@demo.com';
+                    _passwordController.text = 'demo123';
+                  },
+            icon: const Icon(Icons.developer_mode, size: 18),
+            label: const Text('Probar en modo demo'),
+            style: OutlinedButton.styleFrom(
+              foregroundColor: Colors.grey[700],
+              side: BorderSide(color: Colors.grey[400]!),
+            ),
+          ),
+        ),
+
         const SizedBox(height: 20),
 
         // Register link for new customers

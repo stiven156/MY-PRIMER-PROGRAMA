@@ -56,31 +56,37 @@ class _RegisterScreenState extends State<RegisterScreen> {
     });
 
     try {
-      final supabase = Supabase.instance.client;
+      bool supabaseAvailable = false;
+      try { Supabase.instance.client; supabaseAvailable = true; } catch (_) {}
 
-      // 1. Create auth user
+      if (!supabaseAvailable) {
+        // Demo mode: show success message and go to client app
+        await Future.delayed(const Duration(milliseconds: 800));
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Cuenta creada en modo demo. Conecta Supabase para persistir datos.'),
+            backgroundColor: Colors.green,
+          ),
+        );
+        context.go(AppConstants.routeClientApp);
+        return;
+      }
+
+      final supabase = Supabase.instance.client;
       final AuthResponse response = await supabase.auth.signUp(
         email: _emailCtrl.text.trim(),
         password: _passwordCtrl.text,
-        data: {
-          'full_name': _nameCtrl.text.trim(),
-          'role': 'customer',
-        },
+        data: {'full_name': _nameCtrl.text.trim(), 'role': 'customer'},
       );
 
       if (response.user == null) {
-        setState(() {
-          _isLoading = false;
-          _errorMessage =
-              'No se pudo crear la cuenta. Inténtalo de nuevo.';
-        });
+        setState(() { _isLoading = false; _errorMessage = 'No se pudo crear la cuenta. Inténtalo de nuevo.'; });
         return;
       }
 
       final userId = response.user!.id;
-
-      // 2. Create profile row in `customers` table with role = "customer"
-      await supabase.from(AppConstants.tableCustomers).insert({
+      await supabase.from('customers').insert({
         'auth_id': userId,
         'name': _nameCtrl.text.trim(),
         'email': _emailCtrl.text.trim(),
@@ -93,20 +99,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
       });
 
       if (!mounted) return;
-
-      // 3. Navigate to client app
       context.go(AppConstants.routeClientApp);
     } on AuthException catch (e) {
-      setState(() {
-        _isLoading = false;
-        _errorMessage = _mapAuthError(e.message);
-      });
+      setState(() { _isLoading = false; _errorMessage = _mapAuthError(e.message); });
     } catch (e) {
-      setState(() {
-        _isLoading = false;
-        _errorMessage =
-            'Error de conexión. Verifica tu red e inténtalo de nuevo.';
-      });
+      setState(() { _isLoading = false; _errorMessage = 'Error: ${e.toString()}'; });
     }
   }
 

@@ -167,8 +167,12 @@ class _SidebarNavState extends State<SidebarNav> {
     );
 
     if (confirmed == true && mounted) {
-      await Supabase.instance.client.auth.signOut();
-      // GoRouter's refreshListenable redirects to /login automatically.
+      try {
+        await Supabase.instance.client.auth.signOut();
+      } catch (_) {
+        // Demo mode: just navigate to login
+      }
+      if (mounted) context.go(AppConstants.routeLogin);
     }
   }
 

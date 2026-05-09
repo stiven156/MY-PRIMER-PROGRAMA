@@ -103,7 +103,9 @@ class PosNotifier extends StateNotifier<PosState> {
 
   final Ref _ref;
   final _uuid = const Uuid();
-  SupabaseClient get _client => Supabase.instance.client;
+  SupabaseClient? get _client {
+    try { return Supabase.instance.client; } catch (_) { return null; }
+  }
 
   // ── Cart mutations ─────────────────────────────────────────────────────────
 
@@ -239,50 +241,53 @@ class PosNotifier extends StateNotifier<PosState> {
         createdAt: createdAt,
       );
 
-      // ── Persist to Supabase ──────────────────────────────────────────────
-      await _client.from(AppConstants.tableSales).insert({
-        'id': saleId,
-        'customer_id': sale.customerId,
-        'customer_name': sale.customerName,
-        'subtotal': sale.subtotal,
-        'discount_total': sale.discountTotal,
-        'tax_rate': sale.taxRate,
-        'tax_amount': sale.taxAmount,
-        'total': sale.total,
-        'payment_method': sale.paymentMethod.value,
-        'amount_paid': sale.amountPaid,
-        'change': sale.change,
-        'employee_id': sale.employeeId,
-        'employee_name': sale.employeeName,
-        'status': sale.status.value,
-        'created_at': createdAt.toIso8601String(),
-      });
+      // ── Persist to Supabase (skipped in demo mode) ──────────────────────
+      final client = _client;
+      if (client != null) {
+        await client.from(AppConstants.tableSales).insert({
+          'id': saleId,
+          'customer_id': sale.customerId,
+          'customer_name': sale.customerName,
+          'subtotal': sale.subtotal,
+          'discount_total': sale.discountTotal,
+          'tax_rate': sale.taxRate,
+          'tax_amount': sale.taxAmount,
+          'total': sale.total,
+          'payment_method': sale.paymentMethod.value,
+          'amount_paid': sale.amountPaid,
+          'change': sale.change,
+          'employee_id': sale.employeeId,
+          'employee_name': sale.employeeName,
+          'status': sale.status.value,
+          'created_at': createdAt.toIso8601String(),
+        });
 
-      // Persist line items.
-      if (state.items.isNotEmpty) {
-        await _client.from(AppConstants.tableSaleItems).insert(
-          state.items
-              .map((item) => {
-                    'id': _uuid.v4(),
-                    'sale_id': saleId,
-                    'product_id': item.product.id,
-                    'product_name': item.product.name,
-                    'product_code': item.product.code,
-                    'quantity': item.quantity,
-                    'unit_price': item.unitPrice,
-                    'discount': item.discount,
-                    'subtotal': item.subtotal,
-                    'total': item.total,
-                  })
-              .toList(),
-        );
-      }
+        // Persist line items.
+        if (state.items.isNotEmpty) {
+          await client.from(AppConstants.tableSaleItems).insert(
+            state.items
+                .map((item) => {
+                      'id': _uuid.v4(),
+                      'sale_id': saleId,
+                      'product_id': item.product.id,
+                      'product_name': item.product.name,
+                      'product_code': item.product.code,
+                      'quantity': item.quantity,
+                      'unit_price': item.unitPrice,
+                      'discount': item.discount,
+                      'subtotal': item.subtotal,
+                      'total': item.total,
+                    })
+                .toList(),
+          );
+        }
 
-      // Decrement stock in inventory.
-      for (final item in state.items) {
-        await _ref
-            .read(inventoryProvider.notifier)
-            .adjustStock(item.product.id, -item.quantity.toInt(), 'Venta $saleId');
+        // Decrement stock in inventory.
+        for (final item in state.items) {
+          await _ref
+              .read(inventoryProvider.notifier)
+              .adjustStock(item.product.id, -item.quantity.toInt(), 'Venta $saleId');
+        }
       }
       // ────────────────────────────────────────────────────────────────────
 

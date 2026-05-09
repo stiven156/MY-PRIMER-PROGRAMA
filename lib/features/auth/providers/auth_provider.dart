@@ -40,6 +40,51 @@ class AuthState {
 }
 
 // ---------------------------------------------------------------------------
+// Demo users
+// ---------------------------------------------------------------------------
+
+class _DemoUser {
+  final String email;
+  final String password;
+  final UserRole role;
+  final String name;
+
+  const _DemoUser({
+    required this.email,
+    required this.password,
+    required this.role,
+    required this.name,
+  });
+}
+
+const _demoUsers = [
+  _DemoUser(
+    email: 'admin@demo.com',
+    password: 'demo123',
+    role: UserRole.admin,
+    name: 'Admin Demo',
+  ),
+  _DemoUser(
+    email: 'gerente@demo.com',
+    password: 'demo123',
+    role: UserRole.manager,
+    name: 'Gerente Demo',
+  ),
+  _DemoUser(
+    email: 'cajero@demo.com',
+    password: 'demo123',
+    role: UserRole.cashier,
+    name: 'Cajero Demo',
+  ),
+  _DemoUser(
+    email: 'cliente@demo.com',
+    password: 'demo123',
+    role: UserRole.customer,
+    name: 'Cliente Demo',
+  ),
+];
+
+// ---------------------------------------------------------------------------
 // Notifier
 // ---------------------------------------------------------------------------
 
@@ -48,11 +93,29 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   SupabaseClient get _client => Supabase.instance.client;
 
+  /// Returns true when Supabase is initialised and reachable.
+  static bool _isSupabaseAvailable() {
+    try {
+      // Accessing the client throws if Supabase was never initialised or was
+      // initialised with a placeholder URL.
+      Supabase.instance.client;
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
   // ── Session check ─────────────────────────────────────────────────────────
 
   /// Call this at app start to restore an existing session.
   Future<void> checkSession() async {
     state = state.copyWith(isLoading: true, clearError: true);
+
+    if (!_isSupabaseAvailable()) {
+      state = state.copyWith(isLoading: false);
+      return;
+    }
+
     try {
       final session = _client.auth.currentSession;
       if (session == null) {
@@ -80,6 +143,36 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   Future<void> login(String email, String password) async {
     state = state.copyWith(isLoading: true, clearError: true);
+
+    if (!_isSupabaseAvailable()) {
+      final normalised = email.trim().toLowerCase();
+      final match = _demoUsers.where(
+        (u) => u.email == normalised && u.password == password,
+      );
+
+      if (match.isEmpty) {
+        state = state.copyWith(
+          isLoading: false,
+          error:
+              'Usuario demo no encontrado. Usa admin@demo.com / demo123',
+        );
+        return;
+      }
+
+      final demo = match.first;
+      final demoUser = UserModel(
+        id: 'demo-${demo.role.name}',
+        name: demo.name,
+        email: demo.email,
+        role: demo.role,
+        isActive: true,
+        createdAt: DateTime(2024),
+        lastLogin: DateTime.now(),
+      );
+      state = state.copyWith(currentUser: demoUser, isLoading: false);
+      return;
+    }
+
     try {
       final response = await _client.auth.signInWithPassword(
         email: email.trim(),
@@ -123,6 +216,12 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   Future<void> logout() async {
     state = state.copyWith(isLoading: true, clearError: true);
+
+    if (!_isSupabaseAvailable()) {
+      state = const AuthState();
+      return;
+    }
+
     try {
       await _client.auth.signOut();
     } catch (_) {
