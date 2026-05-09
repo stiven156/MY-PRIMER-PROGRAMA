@@ -55,17 +55,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
   Future<void> _handleLogin() async {
     if (!_formKey.currentState!.validate()) return;
     FocusScope.of(context).unfocus();
-
     await ref.read(authProvider.notifier).login(
           _emailController.text,
           _passwordController.text,
         );
-
-    if (!mounted) return;
-    final authState = ref.read(authProvider);
-    if (authState.isAuthenticated) {
-      context.go(AppConstants.routeDashboard);
-    }
+    // El router redirige automáticamente según el rol al detectar el cambio de estado
   }
 
   @override

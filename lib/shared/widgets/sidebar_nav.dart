@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'package:mercados/core/constants/app_constants.dart';
+import 'package:mercados/features/auth/providers/auth_provider.dart';
 
 // ---------------------------------------------------------------------------
 // Navigation destination model
@@ -101,7 +102,7 @@ const List<_NavItem> _navItems = [
 ///
 /// [currentLocation] is compared against each item's route prefix to
 /// determine which item is highlighted.
-class SidebarNav extends StatefulWidget {
+class SidebarNav extends ConsumerStatefulWidget {
   const SidebarNav({
     super.key,
     required this.currentLocation,
@@ -116,10 +117,10 @@ class SidebarNav extends StatefulWidget {
   final bool isDrawer;
 
   @override
-  State<SidebarNav> createState() => _SidebarNavState();
+  ConsumerState<SidebarNav> createState() => _SidebarNavState();
 }
 
-class _SidebarNavState extends State<SidebarNav> {
+class _SidebarNavState extends ConsumerState<SidebarNav> {
   bool _extended = true;
 
   int get _selectedIndex {
@@ -167,12 +168,7 @@ class _SidebarNavState extends State<SidebarNav> {
     );
 
     if (confirmed == true && mounted) {
-      try {
-        await Supabase.instance.client.auth.signOut();
-      } catch (_) {
-        // Demo mode: just navigate to login
-      }
-      if (mounted) context.go(AppConstants.routeLogin);
+      await ref.read(authProvider.notifier).logout();
     }
   }
 
