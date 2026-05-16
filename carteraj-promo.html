@@ -8,307 +8,204 @@
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{overflow-x:hidden;max-width:100%}
+:root{--teal:#14b8a6;--teal-d:#0d9488;--green:#10b981;--red:#ef4444;--orange:#f97316;--blue:#3b82f6;--bg:#04110e}
 
-:root{
-  --teal:#14b8a6;--teal-d:#0d9488;
-  --green:#10b981;--red:#ef4444;--orange:#f97316;--blue:#3b82f6;
-  --bg:#04110e;
-}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);min-height:100vh;display:flex;align-items:center;justify-content:center;overflow-x:hidden}
 
-body{
-  font-family:'Inter',-apple-system,sans-serif;
-  background:var(--bg);min-height:100vh;
-  display:flex;align-items:center;justify-content:center;
-  overflow-x:hidden;
-}
-
-/* ── Background ── */
-.bg{
-  position:fixed;inset:0;
-  background:
-    radial-gradient(ellipse 70% 55% at 12% 50%,rgba(20,184,166,.08) 0%,transparent 70%),
-    radial-gradient(ellipse 45% 40% at 88% 15%,rgba(16,185,129,.05) 0%,transparent 60%),
-    radial-gradient(ellipse 40% 45% at 65% 88%,rgba(20,184,166,.04) 0%,transparent 55%),
-    #04110e;
-  pointer-events:none;z-index:0;
-}
-.bg::after{
-  content:'';position:absolute;inset:0;
-  background-image:radial-gradient(circle,rgba(20,184,166,.06) 1px,transparent 1px);
-  background-size:30px 30px;
-}
+/* ── BG ── */
+.bg{position:fixed;inset:0;background:radial-gradient(ellipse 70% 55% at 12% 50%,rgba(20,184,166,.08) 0%,transparent 70%),radial-gradient(ellipse 45% 40% at 88% 15%,rgba(16,185,129,.05) 0%,transparent 60%),radial-gradient(ellipse 40% 45% at 65% 88%,rgba(20,184,166,.04) 0%,transparent 55%),#04110e;pointer-events:none;z-index:0}
+.bg::after{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(20,184,166,.06) 1px,transparent 1px);background-size:30px 30px}
 .pts{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
-@keyframes rise{
-  0%{transform:translateY(0);opacity:0}8%{opacity:.9}92%{opacity:.4}
-  100%{transform:translateY(-110vh);opacity:0}
-}
+@keyframes rise{0%{transform:translateY(0);opacity:0}8%{opacity:.9}92%{opacity:.4}100%{transform:translateY(-110vh);opacity:0}}
 
-/* ── Layout ── */
-.scene{
-  position:relative;z-index:1;
-  display:grid;grid-template-columns:1fr auto;
-  align-items:center;gap:72px;
-  padding:48px;max-width:1120px;width:100%;
-}
+/* ── LAYOUT ── */
+.scene{position:relative;z-index:1;display:grid;grid-template-columns:1fr auto;align-items:center;gap:64px;padding:48px;max-width:1140px;width:100%}
 
-/* ── Text panel ── */
-.badge{
-  display:inline-flex;align-items:center;gap:8px;
-  border:1px solid rgba(20,184,166,.35);background:rgba(20,184,166,.08);
-  border-radius:100px;padding:5px 16px 5px 8px;margin-bottom:28px;
-  opacity:0;animation:slideL .7s .4s ease both;
-}
-.badge-dot{
-  width:34px;height:34px;border-radius:9px;flex-shrink:0;
-  background:linear-gradient(160deg,#e8e8e8 0%,#b0b0b0 100%);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.7),inset 0 -1px 0 rgba(0,0,0,.25);
-  line-height:1;
-}
+/* ── TEXT PANEL ── */
+.badge{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(20,184,166,.35);background:rgba(20,184,166,.08);border-radius:100px;padding:5px 16px 5px 8px;margin-bottom:28px;opacity:0;animation:slideL .7s .4s ease both}
+.badge-dot{width:34px;height:34px;border-radius:9px;flex-shrink:0;background:linear-gradient(160deg,#e8e8e8,#b0b0b0);display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:inset 0 1px 0 rgba(255,255,255,.7),inset 0 -1px 0 rgba(0,0,0,.25);line-height:1}
 .bdco{font-size:13px;font-weight:900;color:#000;letter-spacing:-1px;line-height:1}
 .bdusd{font-size:8px;font-weight:700;color:#000;line-height:1;margin-top:-1px}
 .badge-txt{font-size:13px;color:#5eead4;font-weight:500;letter-spacing:.3px}
-
-h1{
-  font-size:clamp(48px,6vw,72px);font-weight:900;
-  line-height:.95;letter-spacing:-2px;color:#fff;
-  opacity:0;animation:slideL .7s .6s ease both;
-}
+h1{font-size:clamp(48px,6vw,72px);font-weight:900;line-height:.95;letter-spacing:-2px;color:#fff;opacity:0;animation:slideL .7s .6s ease both}
 h1 em{font-style:normal;color:var(--teal)}
-.tagline{
-  margin-top:14px;font-size:clamp(16px,2vw,20px);
-  color:rgba(255,255,255,.42);font-weight:400;line-height:1.5;
-  opacity:0;animation:slideL .7s .8s ease both;
-}
-
+.tagline{margin-top:14px;font-size:clamp(16px,2vw,20px);color:rgba(255,255,255,.42);font-weight:400;line-height:1.5;opacity:0;animation:slideL .7s .8s ease both}
 .promos{position:relative;height:70px;margin:34px 0 30px;overflow:hidden}
-.promo{
-  position:absolute;inset:0;display:flex;align-items:center;
-  font-size:clamp(17px,2.1vw,24px);font-weight:700;color:#fff;
-  line-height:1.3;opacity:0;transform:translateX(-22px);
-  transition:opacity .5s ease,transform .5s ease;pointer-events:none;
-}
-.promo.in{opacity:1;transform:translateX(0)}
-.promo.out{opacity:0;transform:translateX(22px)}
-
-.dots{
-  display:flex;gap:8px;margin-bottom:34px;
-  opacity:0;animation:fadeIn .6s 1.5s ease both;
-}
+.promo{position:absolute;inset:0;display:flex;align-items:center;font-size:clamp(17px,2.1vw,24px);font-weight:700;color:#fff;line-height:1.3;opacity:0;transform:translateX(-22px);transition:opacity .5s ease,transform .5s ease;pointer-events:none}
+.promo.in{opacity:1;transform:translateX(0)}.promo.out{opacity:0;transform:translateX(22px)}
+.dots{display:flex;gap:8px;margin-bottom:34px;opacity:0;animation:fadeIn .6s 1.5s ease both}
 .dot{height:6px;border-radius:3px;background:rgba(255,255,255,.18);width:6px;transition:all .4s ease}
 .dot.on{background:var(--teal);width:22px}
-
 .store{opacity:0;animation:pop .5s 2s cubic-bezier(.34,1.56,.64,1) both}
-.apple-btn{
-  display:inline-flex;align-items:center;gap:14px;
-  background:#000;border:1px solid rgba(255,255,255,.2);
-  border-radius:14px;padding:11px 22px;text-decoration:none;color:#fff;
-  transition:transform .2s,box-shadow .2s;
-}
+.apple-btn{display:inline-flex;align-items:center;gap:14px;background:#000;border:1px solid rgba(255,255,255,.2);border-radius:14px;padding:11px 22px;text-decoration:none;color:#fff;transition:transform .2s,box-shadow .2s}
 .apple-btn:hover{transform:scale(1.04) translateY(-2px);box-shadow:0 14px 40px rgba(20,184,166,.28)}
 .apple-copy{display:flex;flex-direction:column}
 .apple-sm{font-size:11px;opacity:.75;letter-spacing:.2px}
 .apple-lg{font-size:20px;font-weight:600;line-height:1.1}
 
-/* ── Phone ── */
-.phone-wrap{perspective:1100px;flex-shrink:0}
-.phone{
-  width:282px;height:582px;position:relative;
-  transform-style:preserve-3d;will-change:transform;
-  backface-visibility:visible;-webkit-backface-visibility:visible;
-  animation:phoneEnter 1.5s 0.3s cubic-bezier(0.34,1.56,0.64,1) both;
-}
+/* ── RIGHT COLUMN ── */
+.right-col{display:flex;flex-direction:column;align-items:center;gap:18px;flex-shrink:0}
+
+/* ── PHONE ── */
+.phone-wrap{perspective:1100px}
+.phone{width:282px;height:582px;position:relative;transform-style:preserve-3d;will-change:transform;backface-visibility:visible;-webkit-backface-visibility:visible;animation:phoneEnter 2s .15s linear both}
+
+/* ── Dramatic multi-bounce entrance ── */
 @keyframes phoneEnter{
-  from{opacity:0;transform:rotateY(-72deg) rotateX(30deg) translateY(60px)}
-  to  {opacity:1;transform:rotateY(-14deg) rotateX(4deg)  translateY(0)}
+  0%  {opacity:0;transform:rotateY(-82deg) rotateX(38deg) translateY(90px)}
+  18% {opacity:1;transform:rotateY(18deg)  rotateX(-10deg) translateY(-24px)}
+  34% {transform:rotateY(-26deg) rotateX(13deg)  translateY(14px)}
+  50% {transform:rotateY(8deg)   rotateX(-4deg)  translateY(-8px)}
+  65% {transform:rotateY(-19deg) rotateX(8deg)   translateY(5px)}
+  78% {transform:rotateY(-10deg) rotateX(2deg)   translateY(-2px)}
+  90% {transform:rotateY(-15deg) rotateX(5deg)   translateY(1px)}
+  100%{transform:rotateY(-14deg) rotateX(4deg)   translateY(0)}
 }
-.frame{
-  position:absolute;inset:0;border-radius:46px;
-  background:linear-gradient(150deg,#2d2d2d 0%,#111 40%,#1c1c1c 100%);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.13),
-    inset 0 -1px 0 rgba(0,0,0,.6),
-    0 0 0 .5px rgba(255,255,255,.07),
-    24px 48px 96px rgba(0,0,0,.95),
-    -4px -4px 20px rgba(255,255,255,.02);
-  backface-visibility:visible;-webkit-backface-visibility:visible;
-}
+
+.frame{position:absolute;inset:0;border-radius:46px;background:linear-gradient(150deg,#2d2d2d 0%,#111 40%,#1c1c1c 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,.13),inset 0 -1px 0 rgba(0,0,0,.6),0 0 0 .5px rgba(255,255,255,.07),24px 48px 96px rgba(0,0,0,.95),-4px -4px 20px rgba(255,255,255,.02);backface-visibility:visible;-webkit-backface-visibility:visible}
 .br{position:absolute;right:-3px;width:3px;border-radius:0 2px 2px 0;background:linear-gradient(to right,#232323,#333)}
 .br1{top:118px;height:56px}.br2{top:188px;height:56px}
 .bl{position:absolute;left:-3px;width:3px;border-radius:2px 0 0 2px;background:linear-gradient(to left,#232323,#333)}
 .bl1{top:98px;height:33px}.bl2{top:142px;height:58px}.bl3{top:212px;height:58px}
-.screen-bg{
-  position:absolute;top:9px;left:9px;right:9px;bottom:9px;
-  border-radius:38px;background:#000;overflow:hidden;
-}
-.island{
-  position:absolute;top:13px;left:50%;transform:translateX(-50%);
-  width:104px;height:32px;background:#000;border-radius:18px;z-index:200;
-  box-shadow:0 0 0 1px rgba(255,255,255,.04);
-}
+.screen-bg{position:absolute;top:9px;left:9px;right:9px;bottom:9px;border-radius:38px;background:#000;overflow:hidden}
+.island{position:absolute;top:13px;left:50%;transform:translateX(-50%);width:104px;height:32px;background:#000;border-radius:18px;z-index:200;box-shadow:0 0 0 1px rgba(255,255,255,.04)}
 .screens{position:absolute;inset:0;border-radius:38px;overflow:hidden}
-
-/* ── Slide base ── */
-.scr{
-  position:absolute;inset:0;opacity:0;
-  font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;
-  overflow:hidden;border-radius:38px;
-}
+.scr{position:absolute;inset:0;opacity:0;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;overflow:hidden;border-radius:38px}
 .scr.show{opacity:1}
 
-/* ── 5 entrance animations (one per slide) ── */
-@keyframes entL   {from{transform:translateX(-40%);opacity:0}to{transform:translateX(0);opacity:1}}
-@keyframes entZoom {from{transform:scale(.76);opacity:0}to{transform:scale(1);opacity:1}}
-@keyframes entR   {from{transform:translateX(40%);opacity:0}to{transform:translateX(0);opacity:1}}
-@keyframes entFlip{from{transform:perspective(500px) rotateY(60deg);opacity:0}to{transform:perspective(500px) rotateY(0);opacity:1}}
-@keyframes entUp  {from{transform:translateY(40%);opacity:0}to{transform:translateY(0);opacity:1}}
+/* ── 5 entrance animations ── */
+@keyframes entL   {from{transform:translateX(-42%);opacity:0}to{transform:translateX(0);opacity:1}}
+@keyframes entZoom{from{transform:scale(.74);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes entR   {from{transform:translateX(42%);opacity:0}to{transform:translateX(0);opacity:1}}
+@keyframes entFlip{from{transform:perspective(480px) rotateY(65deg);opacity:0}to{transform:perspective(480px) rotateY(0);opacity:1}}
+@keyframes entUp  {from{transform:translateY(44%);opacity:0}to{transform:translateY(0);opacity:1}}
+.a-l{animation:entL    .52s cubic-bezier(.22,1,.36,1) both}
+.a-z{animation:entZoom .45s cubic-bezier(.34,1.56,.64,1) both}
+.a-r{animation:entR    .52s cubic-bezier(.22,1,.36,1) both}
+.a-f{animation:entFlip .52s cubic-bezier(.22,1,.36,1) both}
+.a-u{animation:entUp   .52s cubic-bezier(.22,1,.36,1) both}
 
-.a-l {animation:entL    .52s cubic-bezier(.22,1,.36,1) both}
-.a-z {animation:entZoom .45s cubic-bezier(.34,1.56,.64,1) both}
-.a-r {animation:entR    .52s cubic-bezier(.22,1,.36,1) both}
-.a-f {animation:entFlip .52s cubic-bezier(.22,1,.36,1) both}
-.a-u {animation:entUp   .52s cubic-bezier(.22,1,.36,1) both}
-
-/* ════ SCREEN 1 — Dashboard ════ */
-.s1{background:#000}
-.s1-head{
-  background:linear-gradient(175deg,#0d3d32 0%,#091e18 62%,transparent 100%);
-  padding:52px 18px 20px;position:relative;
+/* ── HORIZONTAL SCROLL TRACK ── */
+.track-wrap{
+  position:relative;width:320px;
+  /* fade edges */
 }
+.track-wrap::before,.track-wrap::after{
+  content:'';position:absolute;top:0;bottom:0;width:48px;z-index:2;pointer-events:none;
+}
+.track-wrap::before{left:0;background:linear-gradient(to right,#04110e,transparent)}
+.track-wrap::after {right:0;background:linear-gradient(to left ,#04110e,transparent)}
+
+.track{
+  display:flex;gap:10px;
+  overflow-x:scroll;scroll-snap-type:x mandatory;scroll-behavior:smooth;
+  -webkit-overflow-scrolling:touch;scrollbar-width:none;
+  padding:8px 130px;/* large padding so active card can center */
+}
+.track::-webkit-scrollbar{display:none}
+
+.tcard{
+  flex:0 0 54px;height:108px;border-radius:12px;
+  scroll-snap-align:center;cursor:pointer;
+  border:2px solid rgba(255,255,255,.08);
+  transition:border-color .3s,transform .3s,opacity .3s;
+  overflow:hidden;opacity:.45;transform:scale(.9);
+  position:relative;display:flex;flex-direction:column;
+}
+.tcard.on{border-color:var(--teal);opacity:1;transform:scale(1.06)}
+.tcard:hover:not(.on){opacity:.7;transform:scale(.95)}
+.tc-top{height:38%;flex-shrink:0}
+.tc-body{flex:1;padding:3px;display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.tc-cell{border-radius:3px}
+.tc-label{position:absolute;bottom:4px;left:0;right:0;text-align:center;font-size:6.5px;font-weight:600;color:rgba(255,255,255,.8);letter-spacing:.3px;text-transform:uppercase}
+
+/* ── SCREEN CSS ── */
+/* shared pill */
+.pill{display:inline-flex;align-items:center;gap:6px;background:var(--teal-d);border-radius:100px;padding:5px 14px 5px 8px;font-size:12px;font-weight:600;color:#fff}
+.pill-ic{width:20px;height:20px;border-radius:6px;flex-shrink:0;background:linear-gradient(160deg,#e8e8e8,#b0b0b0);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:7px;font-weight:900;color:#000;line-height:1}
+/* shared nav */
+.nav{position:absolute;bottom:0;left:0;right:0;background:rgba(7,7,7,.98);border-top:1px solid #1c1c1c;display:flex;padding:7px 0 14px}
+.ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:1px;font-size:8.5px;color:rgba(255,255,255,.3)}
+.ni.act{color:var(--teal)}.nic{font-size:14px}
+
+/* S1 Dashboard */
+.s1{background:#000}
+.s1-head{background:linear-gradient(175deg,#0d3d32 0%,#091e18 62%,transparent 100%);padding:52px 18px 20px;position:relative}
 .s1-gear{position:absolute;top:52px;right:18px;font-size:18px;opacity:.55}
 .s1-hi{font-size:11px;color:rgba(255,255,255,.6)}
 .s1-ttl{font-size:21px;font-weight:700;color:#fff;margin:3px 0 14px}
 .s1-kpis{display:flex}
-.s1-kpi{flex:1}
-.s1-kl{font-size:9.5px;color:rgba(255,255,255,.5)}
-.s1-kv{font-size:11.5px;font-weight:600;color:#fff;margin-top:1px}
+.s1-kpi{flex:1}.s1-kl{font-size:9.5px;color:rgba(255,255,255,.5)}.s1-kv{font-size:11.5px;font-weight:600;color:#fff;margin-top:1px}
 .s1-sep{width:1px;background:rgba(255,255,255,.12);margin:2px 9px}
-.s1-body{padding:13px 13px 0}
-.s1-sec{font-size:12px;font-weight:600;color:#fff;margin-bottom:10px}
+.s1-body{padding:13px 13px 0}.s1-sec{font-size:12px;font-weight:600;color:#fff;margin-bottom:10px}
 .s1-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
 .s1-card{border-radius:13px;padding:10px 11px}
-.s1-ci{font-size:15px;margin-bottom:14px}
-.s1-cl{font-size:9.5px;color:rgba(255,255,255,.75);margin-bottom:2px}
-.s1-cv{font-size:13px;font-weight:700;color:#fff}
-.cb{background:linear-gradient(135deg,#2563eb,#1d4ed8)}
-.co{background:linear-gradient(135deg,#ea580c,#c2410c)}
-.cg{background:linear-gradient(135deg,#059669,#047857)}
-.ct{background:linear-gradient(135deg,#0d9488,#0f766e)}
-.cd{background:#171717;border:1px solid #2a2a2a}
-.cr{background:#1a0808;border:1px solid #3a1010}
-.s1-nav{
-  position:absolute;bottom:0;left:0;right:0;
-  background:rgba(7,7,7,.98);border-top:1px solid #1c1c1c;
-  display:flex;padding:7px 0 14px;
-}
-.ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:1px;font-size:8.5px;color:rgba(255,255,255,.3)}
-.ni.act{color:var(--teal)}
-.nic{font-size:14px}
+.s1-ci{font-size:15px;margin-bottom:14px}.s1-cl{font-size:9.5px;color:rgba(255,255,255,.75);margin-bottom:2px}.s1-cv{font-size:13px;font-weight:700;color:#fff}
+.cb{background:linear-gradient(135deg,#2563eb,#1d4ed8)}.co{background:linear-gradient(135deg,#ea580c,#c2410c)}
+.cg{background:linear-gradient(135deg,#059669,#047857)}.ct{background:linear-gradient(135deg,#0d9488,#0f766e)}
+.cd{background:#171717;border:1px solid #2a2a2a}.cr{background:#1a0808;border:1px solid #3a1010}
 
-/* ════ SCREEN 2 — Resumen del mes ════ */
+/* S2 Mes */
 .s2{background:linear-gradient(158deg,#0b3028 0%,#071c16 45%,#04110e 100%);padding:52px 20px 20px}
-.pill{
-  display:inline-flex;align-items:center;gap:6px;
-  background:var(--teal-d);border-radius:100px;
-  padding:5px 14px 5px 8px;font-size:12px;font-weight:600;color:#fff;
-}
-.pill-ic{
-  width:20px;height:20px;border-radius:6px;flex-shrink:0;
-  background:linear-gradient(160deg,#e8e8e8,#b0b0b0);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  font-size:7px;font-weight:900;color:#000;line-height:1;
-}
 .s2-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-.s2-mon{font-size:11.5px;color:rgba(255,255,255,.38)}
-.s2-h{font-size:15px;font-weight:700;color:#fff;margin-bottom:12px}
-.s2-lbl{font-size:11.5px;color:rgba(255,255,255,.5);margin-bottom:3px}
-.s2-amt{font-size:31px;font-weight:800;color:#fff;letter-spacing:-1px;margin-bottom:13px}
+.s2-mon{font-size:11.5px;color:rgba(255,255,255,.38)}.s2-h{font-size:15px;font-weight:700;color:#fff;margin-bottom:12px}
+.s2-lbl{font-size:11.5px;color:rgba(255,255,255,.5);margin-bottom:3px}.s2-amt{font-size:31px;font-weight:800;color:#fff;letter-spacing:-1px;margin-bottom:13px}
 .s2-track{height:7px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden;margin-bottom:5px}
 .s2-fill{height:100%;width:93%;background:linear-gradient(90deg,#ef4444,#b91c1c);border-radius:4px}
 .s2-pct{font-size:10.5px;color:rgba(255,255,255,.42);margin-bottom:16px}
 .s2-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.06)}
 .s2-rl{font-size:11.5px;color:rgba(255,255,255,.65);display:flex;align-items:center;gap:6px}
-.s2-rv{font-size:12.5px;font-weight:600;color:#fff}
-.s2-rv.g{color:var(--green)}
+.s2-rv{font-size:12.5px;font-weight:600;color:#fff}.s2-rv.g{color:var(--green)}
 .s2-bal{display:flex;justify-content:space-between;align-items:center;padding-top:13px}
-.s2-bl{font-size:12px;color:rgba(255,255,255,.5)}
-.s2-bv{font-size:16px;font-weight:700;color:var(--green)}
+.s2-bl{font-size:12px;color:rgba(255,255,255,.5)}.s2-bv{font-size:16px;font-weight:700;color:var(--green)}
 .s2-foot{text-align:center;margin-top:16px;font-size:10px;color:rgba(255,255,255,.14)}
 
-/* ════ SCREEN 3 — Préstamos ════ */
+/* S3 Préstamos */
 .s3{background:linear-gradient(158deg,#0b3028 0%,#071c16 45%,#04110e 100%);padding:52px 20px 20px}
 .s3-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px}
 .s3-act{font-size:11px;color:rgba(255,255,255,.34);padding-top:4px}
 .s3-h{font-size:15px;font-weight:700;color:#fff;margin-bottom:6px}
-.s3-lbl{font-size:11.5px;color:rgba(255,255,255,.5);margin-bottom:3px}
-.s3-amt{font-size:35px;font-weight:800;color:#fff;letter-spacing:-1px;margin-bottom:13px}
+.s3-lbl{font-size:11.5px;color:rgba(255,255,255,.5);margin-bottom:3px}.s3-amt{font-size:35px;font-weight:800;color:#fff;letter-spacing:-1px;margin-bottom:13px}
 .s3-cards{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:13px}
 .s3-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:11px}
-.s3-cl{font-size:10px;color:rgba(255,255,255,.44);margin-bottom:3px}
-.s3-cv{font-size:13.5px;font-weight:700;color:#fff}
-.s3-cv.g{color:var(--green)}
+.s3-cl{font-size:10px;color:rgba(255,255,255,.44);margin-bottom:3px}.s3-cv{font-size:13.5px;font-weight:700;color:#fff}.s3-cv.g{color:var(--green)}
 .s3-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.07)}
 .s3-left{display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,.8)}
 .s3-avi{width:26px;height:26px;border-radius:50%;background:rgba(20,184,166,.14);border:1px solid rgba(20,184,166,.22);display:flex;align-items:center;justify-content:center;font-size:11px}
 .s3-ram{font-size:12.5px;font-weight:600;color:#fff}
 .s3-tot{display:flex;justify-content:space-between;align-items:center;padding-top:12px}
-.s3-tl{font-size:11.5px;color:rgba(255,255,255,.48)}
-.s3-tv{font-size:14px;font-weight:700;color:var(--green)}
+.s3-tl{font-size:11.5px;color:rgba(255,255,255,.48)}.s3-tv{font-size:14px;font-weight:700;color:var(--green)}
 
-/* ════ SCREEN 4 — Deudas ════ */
+/* S4 Deudas */
 .s4{background:#000;padding-top:52px}
 .s4-tabs{display:flex;background:#111;margin:0 12px 13px;border-radius:12px;padding:4px}
 .s4-tab{flex:1;text-align:center;padding:8px 2px;font-size:9.5px;color:rgba(255,255,255,.33);border-radius:8px}
 .s4-tab.on{background:var(--teal);color:#fff;font-weight:600}
 .s4-ttl{font-size:15px;font-weight:700;color:#fff;padding:0 16px;margin-bottom:14px}
-.s4-total{
-  margin:0 16px 14px;border-radius:14px;
-  background:linear-gradient(135deg,#7f1d1d,#991b1b);
-  padding:16px 18px;
-}
-.s4-tl{font-size:12px;color:rgba(255,255,255,.75);margin-bottom:4px}
-.s4-tv{font-size:32px;font-weight:800;color:#fff;letter-spacing:-1px}
+.s4-total{margin:0 16px 14px;border-radius:14px;background:linear-gradient(135deg,#7f1d1d,#991b1b);padding:16px 18px}
+.s4-tl{font-size:12px;color:rgba(255,255,255,.75);margin-bottom:4px}.s4-tv{font-size:32px;font-weight:800;color:#fff;letter-spacing:-1px}
 .s4-items{padding:0 16px;display:flex;flex-direction:column;gap:8px}
-.s4-item{
-  display:flex;align-items:center;gap:10px;
-  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);
-  border-radius:12px;padding:11px 13px;
-}
-.s4-ico{
-  width:32px;height:32px;border-radius:50%;
-  background:rgba(20,184,166,.15);border:1px solid rgba(20,184,166,.2);
-  display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;
-}
-.s4-iname{font-size:12px;color:#fff;font-weight:500}
-.s4-isub{font-size:10px;color:rgba(255,255,255,.4)}
+.s4-item{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:11px 13px}
+.s4-ico{width:32px;height:32px;border-radius:50%;background:rgba(20,184,166,.15);border:1px solid rgba(20,184,166,.2);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.s4-iname{font-size:12px;color:#fff;font-weight:500}.s4-isub{font-size:10px;color:rgba(255,255,255,.4)}
 .s4-iamt{font-size:12.5px;font-weight:600;color:#fff;margin-left:auto}
-.s4-nav{
-  position:absolute;bottom:0;left:0;right:0;
-  background:rgba(7,7,7,.98);border-top:1px solid #1c1c1c;
-  display:flex;padding:7px 0 14px;
-}
 
-/* ════ SCREEN 5 — Presupuesto ════ */
+/* S5 Presupuesto */
 .s5{background:#000;padding-top:52px}
 .s5-tabs{display:flex;background:#111;margin:0 12px 13px;border-radius:12px;padding:4px}
 .s5-tab{flex:1;text-align:center;padding:8px 2px;font-size:9.5px;color:rgba(255,255,255,.33);border-radius:8px}
 .s5-tab.on{background:var(--teal);color:#fff;font-weight:600}
 .s5-hd{background:var(--teal-d);margin:0 12px 14px;border-radius:14px;padding:13px 14px}
 .s5-ht{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-.s5-date{font-size:10.5px;color:rgba(255,255,255,.85)}
-.s5-days{font-size:9px;background:rgba(0,0,0,.25);padding:3px 10px;border-radius:100px;color:#fff}
+.s5-date{font-size:10.5px;color:rgba(255,255,255,.85)}.s5-days{font-size:9px;background:rgba(0,0,0,.25);padding:3px 10px;border-radius:100px;color:#fff}
 .s5-kpis{display:flex;justify-content:space-around}
 .s5-ki{display:flex;flex-direction:column;align-items:center;gap:1px}
-.s5-kic{font-size:14px}
-.s5-kv{font-size:11.5px;font-weight:700;color:#fff}
-.s5-kl{font-size:8.5px;color:rgba(255,255,255,.6)}
+.s5-kic{font-size:14px}.s5-kv{font-size:11.5px;font-weight:700;color:#fff}.s5-kl{font-size:8.5px;color:rgba(255,255,255,.6)}
 .s5-chart{display:flex;flex-direction:column;align-items:center;padding:0 12px}
-.s5-ct{font-size:13px;font-weight:700;color:var(--red)}
-.s5-cs{font-size:9.5px;color:rgba(255,255,255,.35);margin-bottom:10px}
+.s5-ct{font-size:13px;font-weight:700;color:var(--red)}.s5-cs{font-size:9.5px;color:rgba(255,255,255,.35);margin-bottom:10px}
 .s5-bar{width:88px;height:155px;background:#1a0808;border-radius:18px;overflow:hidden;display:flex;align-items:flex-end}
 .s5-bf{width:100%;height:92%;background:linear-gradient(180deg,#f87171 0%,#991b1b 100%);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:#fff}
 .s5-cb{font-size:10.5px;color:rgba(255,255,255,.34);margin-top:8px}
-.s5-nav{position:absolute;bottom:0;left:0;right:0;background:rgba(7,7,7,.98);border-top:1px solid #1c1c1c;display:flex;padding:7px 0 14px}
 
 /* ── Keyframes globals ── */
 @keyframes slideL{from{opacity:0;transform:translateX(-28px)}to{opacity:1;transform:translateX(0)}}
@@ -316,20 +213,23 @@ h1 em{font-style:normal;color:var(--teal)}
 @keyframes pop{from{opacity:0;transform:scale(.72)}to{opacity:1;transform:scale(1)}}
 
 /* ── Responsive ── */
-@media(max-width:820px){
-  .scene{grid-template-columns:1fr;justify-items:center;gap:38px;padding:32px 24px;overflow:hidden}
-  .panel{text-align:center}
-  .badge{margin:0 auto 28px}
-  .dots{justify-content:center}
-  .store{display:flex;justify-content:center}
-  .phone-wrap{order:-1;perspective:600px;overflow:hidden;border-radius:50px}
-  .phone{width:232px;height:478px;animation-name:phoneEnterM;animation-timing-function:cubic-bezier(.34,1.56,.64,1)}
+@media(max-width:860px){
+  .scene{grid-template-columns:1fr;justify-items:center;gap:32px;padding:32px 20px;overflow:hidden}
+  .panel{text-align:center}.badge{margin:0 auto 28px}.dots{justify-content:center}.store{display:flex;justify-content:center}
+  .right-col{order:-1}
+  .phone-wrap{perspective:600px;overflow:hidden;border-radius:50px}
+  .phone{width:230px;height:474px;animation-name:phoneEnterM;animation-timing-function:linear}
+  .track-wrap{width:280px}
 }
 @keyframes phoneEnterM{
-  from{opacity:0;transform:rotateY(-30deg) rotateX(15deg) translateY(40px)}
-  to  {opacity:1;transform:rotateY(0deg) rotateX(0deg) translateY(0)}
+  0%  {opacity:0;transform:rotateY(-50deg) rotateX(25deg) translateY(60px)}
+  35% {opacity:1;transform:rotateY(12deg)  rotateX(-8deg)  translateY(-16px)}
+  55% {transform:rotateY(-18deg) rotateX(9deg) translateY(10px)}
+  72% {transform:rotateY(5deg)   rotateX(-2deg) translateY(-4px)}
+  86% {transform:rotateY(-8deg)  rotateX(4deg)  translateY(2px)}
+  100%{transform:rotateY(0deg)   rotateX(0deg)  translateY(0)}
 }
-@media(max-width:400px){.phone{width:200px;height:412px}}
+@media(max-width:400px){.phone{width:200px;height:412px}.track-wrap{width:240px}}
 </style>
 </head>
 <body>
@@ -337,12 +237,10 @@ h1 em{font-style:normal;color:var(--teal)}
 <div class="pts" id="pts"></div>
 
 <div class="scene">
-  <!-- ── Text ── -->
+  <!-- ── TEXT ── -->
   <div class="panel">
     <div class="badge">
-      <div class="badge-dot">
-        <span class="bdco">CO</span><span class="bdusd">$</span>
-      </div>
+      <div class="badge-dot"><span class="bdco">CO</span><span class="bdusd">$</span></div>
       <span class="badge-txt">COcartera</span>
     </div>
     <h1>CO<em>cartera</em></h1>
@@ -355,11 +253,8 @@ h1 em{font-style:normal;color:var(--teal)}
       <div class="promo"    id="p4">Cumple tu presupuesto, mes a mes</div>
     </div>
     <div class="dots">
-      <div class="dot on" id="d0"></div>
-      <div class="dot"    id="d1"></div>
-      <div class="dot"    id="d2"></div>
-      <div class="dot"    id="d3"></div>
-      <div class="dot"    id="d4"></div>
+      <div class="dot on" id="d0"></div><div class="dot" id="d1"></div>
+      <div class="dot" id="d2"></div><div class="dot" id="d3"></div><div class="dot" id="d4"></div>
     </div>
     <div class="store">
       <a href="#" class="apple-btn">
@@ -374,168 +269,208 @@ h1 em{font-style:normal;color:var(--teal)}
     </div>
   </div>
 
-  <!-- ── Phone ── -->
-  <div class="phone-wrap">
-    <div class="phone" id="phone">
-      <div class="frame">
-        <div class="br br1"></div><div class="br br2"></div>
-        <div class="bl bl1"></div><div class="bl bl2"></div><div class="bl bl3"></div>
-      </div>
-      <div class="screen-bg">
-        <div class="island"></div>
-        <div class="screens">
+  <!-- ── RIGHT COLUMN: phone + track ── -->
+  <div class="right-col">
 
-          <!-- S1: Dashboard — entra deslizando desde la izquierda -->
-          <div class="scr s1 show a-l" id="sc0">
-            <div class="s1-head">
-              <div class="s1-gear">⚙️</div>
-              <div class="s1-hi">🌤️ Buenas tardes, Co</div>
-              <div class="s1-ttl">Tu cartera hoy 💼</div>
-              <div class="s1-kpis">
-                <div class="s1-kpi"><div class="s1-kl">⏳ Por cobrar</div><div class="s1-kv">150.000 $</div></div>
-                <div class="s1-sep"></div>
-                <div class="s1-kpi"><div class="s1-kl">✅ Cobrado</div><div class="s1-kv">70.000 $</div></div>
-                <div class="s1-sep"></div>
-                <div class="s1-kpi"><div class="s1-kl">🏦 Préstamos</div><div class="s1-kv">1 activo</div></div>
-              </div>
-            </div>
-            <div class="s1-body">
-              <div class="s1-sec">📊 Resumen de cartera</div>
-              <div class="s1-grid">
-                <div class="s1-card cb"><div class="s1-ci">💰</div><div class="s1-cl">Capital prestado</div><div class="s1-cv">200.000 $</div></div>
-                <div class="s1-card co"><div class="s1-ci">⏳</div><div class="s1-cl">Por cobrar</div><div class="s1-cv">150.000 $</div></div>
-                <div class="s1-card cg"><div class="s1-ci">✅</div><div class="s1-cl">Total cobrado</div><div class="s1-cv">70.000 $</div></div>
-                <div class="s1-card ct"><div class="s1-ci">👥</div><div class="s1-cl">Clientes activos</div><div class="s1-cv">1/1</div></div>
-                <div class="s1-card cd"><div class="s1-ci">🏦</div><div class="s1-cl">Préstamos activos</div><div class="s1-cv">1 activo</div></div>
-                <div class="s1-card cr"><div class="s1-ci">💳</div><div class="s1-cl">Mis deudas</div><div class="s1-cv">37.500 $</div></div>
-              </div>
-            </div>
-            <div class="s1-nav">
-              <div class="ni act"><span class="nic">🏠</span>Inicio</div>
-              <div class="ni"><span class="nic">👥</span>Clientes</div>
-              <div class="ni"><span class="nic">🏦</span>Préstamos</div>
-              <div class="ni"><span class="nic">💳</span>Personal</div>
-              <div class="ni"><span class="nic">📊</span>Reportes</div>
-            </div>
-          </div>
+    <!-- Phone -->
+    <div class="phone-wrap">
+      <div class="phone" id="phone">
+        <div class="frame">
+          <div class="br br1"></div><div class="br br2"></div>
+          <div class="bl bl1"></div><div class="bl bl2"></div><div class="bl bl3"></div>
+        </div>
+        <div class="screen-bg">
+          <div class="island"></div>
+          <div class="screens">
 
-          <!-- S2: Resumen del mes — entra con zoom -->
-          <div class="scr s2" id="sc1">
-            <div class="s2-top">
-              <div class="pill"><div class="pill-ic">CO<span style="font-size:5px">$</span></div>COcartera</div>
-              <div class="s2-mon">mayo 2026</div>
+            <!-- S1: Dashboard -->
+            <div class="scr s1 show a-l" id="sc0">
+              <div class="s1-head">
+                <div class="s1-gear">⚙️</div>
+                <div class="s1-hi">🌤️ Buenas tardes, Co</div>
+                <div class="s1-ttl">Tu cartera hoy 💼</div>
+                <div class="s1-kpis">
+                  <div class="s1-kpi"><div class="s1-kl">⏳ Por cobrar</div><div class="s1-kv">150.000 $</div></div>
+                  <div class="s1-sep"></div>
+                  <div class="s1-kpi"><div class="s1-kl">✅ Cobrado</div><div class="s1-kv">70.000 $</div></div>
+                  <div class="s1-sep"></div>
+                  <div class="s1-kpi"><div class="s1-kl">🏦 Préstamos</div><div class="s1-kv">1 activo</div></div>
+                </div>
+              </div>
+              <div class="s1-body">
+                <div class="s1-sec">📊 Resumen de cartera</div>
+                <div class="s1-grid">
+                  <div class="s1-card cb"><div class="s1-ci">💰</div><div class="s1-cl">Capital prestado</div><div class="s1-cv">200.000 $</div></div>
+                  <div class="s1-card co"><div class="s1-ci">⏳</div><div class="s1-cl">Por cobrar</div><div class="s1-cv">150.000 $</div></div>
+                  <div class="s1-card cg"><div class="s1-ci">✅</div><div class="s1-cl">Total cobrado</div><div class="s1-cv">70.000 $</div></div>
+                  <div class="s1-card ct"><div class="s1-ci">👥</div><div class="s1-cl">Clientes activos</div><div class="s1-cv">1/1</div></div>
+                  <div class="s1-card cd"><div class="s1-ci">🏦</div><div class="s1-cl">Préstamos activos</div><div class="s1-cv">1 activo</div></div>
+                  <div class="s1-card cr"><div class="s1-ci">💳</div><div class="s1-cl">Mis deudas</div><div class="s1-cv">37.500 $</div></div>
+                </div>
+              </div>
+              <div class="nav">
+                <div class="ni act"><span class="nic">🏠</span>Inicio</div>
+                <div class="ni"><span class="nic">👥</span>Clientes</div>
+                <div class="ni"><span class="nic">🏦</span>Préstamos</div>
+                <div class="ni"><span class="nic">💳</span>Personal</div>
+                <div class="ni"><span class="nic">📊</span>Reportes</div>
+              </div>
             </div>
-            <div class="s2-h">Resumen del mes</div>
-            <div class="s2-lbl">Gasté este mes</div>
-            <div class="s2-amt">1.850.000 $</div>
-            <div class="s2-track"><div class="s2-fill"></div></div>
-            <div class="s2-pct">93% del presupuesto mensual</div>
-            <div class="s2-row"><div class="s2-rl">🍽️ Comida</div><div class="s2-rv">1.850.000 $</div></div>
-            <div class="s2-row"><div class="s2-rl">Ingresos</div><div class="s2-rv g">5.000.000 $</div></div>
-            <div class="s2-bal"><div class="s2-bl">Balance</div><div class="s2-bv">3.150.000 $</div></div>
-            <div class="s2-foot">COcartera</div>
-          </div>
 
-          <!-- S3: Préstamos — entra deslizando desde la derecha -->
-          <div class="scr s3" id="sc2">
-            <div class="s3-top">
-              <div class="pill"><div class="pill-ic">CO<span style="font-size:5px">$</span></div>COcartera</div>
-              <div class="s3-act">1 préstamos activos</div>
+            <!-- S2: Resumen del mes -->
+            <div class="scr s2" id="sc1">
+              <div class="s2-top">
+                <div class="pill"><div class="pill-ic">CO<span style="font-size:5px">$</span></div>COcartera</div>
+                <div class="s2-mon">mayo 2026</div>
+              </div>
+              <div class="s2-h">Resumen del mes</div>
+              <div class="s2-lbl">Gasté este mes</div>
+              <div class="s2-amt">1.850.000 $</div>
+              <div class="s2-track"><div class="s2-fill"></div></div>
+              <div class="s2-pct">93% del presupuesto mensual</div>
+              <div class="s2-row"><div class="s2-rl">🍽️ Comida</div><div class="s2-rv">1.850.000 $</div></div>
+              <div class="s2-row"><div class="s2-rl">Ingresos</div><div class="s2-rv g">5.000.000 $</div></div>
+              <div class="s2-bal"><div class="s2-bl">Balance</div><div class="s2-bv">3.150.000 $</div></div>
+              <div class="s2-foot">COcartera</div>
             </div>
-            <div class="s3-h">Resumen de préstamos</div>
-            <div class="s3-lbl">Saldo por cobrar</div>
-            <div class="s3-amt">150.000 $</div>
-            <div class="s3-cards">
-              <div class="s3-card"><div class="s3-cl">Prestado</div><div class="s3-cv">200.000 $</div></div>
-              <div class="s3-card"><div class="s3-cl">Cobrado</div><div class="s3-cv g">70.000 $</div></div>
-            </div>
-            <div class="s3-row">
-              <div class="s3-left"><div class="s3-avi">👤</div>Stiven</div>
-              <div class="s3-ram">150.000 $</div>
-            </div>
-            <div class="s3-tot"><div class="s3-tl">Total cobrado</div><div class="s3-tv">70.000 $</div></div>
-            <div class="s2-foot" style="margin-top:14px">COcartera</div>
-          </div>
 
-          <!-- S4: Deudas — entra con flip 3D horizontal -->
-          <div class="scr s4" id="sc3">
-            <div class="s4-tabs">
-              <div class="s4-tab">Gastos</div>
-              <div class="s4-tab on">Deudas</div>
-              <div class="s4-tab">Presupuesto</div>
-            </div>
-            <div class="s4-ttl">Mis deudas</div>
-            <div class="s4-total">
-              <div class="s4-tl">Total que debes</div>
-              <div class="s4-tv">37.500 $</div>
-            </div>
-            <div class="s4-items">
-              <div class="s4-item">
-                <div class="s4-ico">🏦</div>
-                <div><div class="s4-iname">20000</div><div class="s4-isub">Préstamo • 17.500 $</div></div>
-                <div class="s4-iamt">17.500 $</div>
+            <!-- S3: Préstamos -->
+            <div class="scr s3" id="sc2">
+              <div class="s3-top">
+                <div class="pill"><div class="pill-ic">CO<span style="font-size:5px">$</span></div>COcartera</div>
+                <div class="s3-act">1 préstamos activos</div>
               </div>
-              <div class="s4-item">
-                <div class="s4-ico">💵</div>
-                <div><div class="s4-iname">Arriendo</div><div class="s4-isub">Otro • 0 $</div></div>
-                <div class="s4-iamt">0 $</div>
+              <div class="s3-h">Resumen de préstamos</div>
+              <div class="s3-lbl">Saldo por cobrar</div>
+              <div class="s3-amt">150.000 $</div>
+              <div class="s3-cards">
+                <div class="s3-card"><div class="s3-cl">Prestado</div><div class="s3-cv">200.000 $</div></div>
+                <div class="s3-card"><div class="s3-cl">Cobrado</div><div class="s3-cv g">70.000 $</div></div>
               </div>
-              <div class="s4-item">
-                <div class="s4-ico">💵</div>
-                <div><div class="s4-iname">Si</div><div class="s4-isub">Otro • 20.000 $</div></div>
-                <div class="s4-iamt">20.000 $</div>
+              <div class="s3-row">
+                <div class="s3-left"><div class="s3-avi">👤</div>Stiven</div>
+                <div class="s3-ram">150.000 $</div>
               </div>
+              <div class="s3-tot"><div class="s3-tl">Total cobrado</div><div class="s3-tv">70.000 $</div></div>
+              <div class="s2-foot" style="margin-top:14px">COcartera</div>
             </div>
-            <div class="s4-nav">
-              <div class="ni"><span class="nic">🏠</span>Inicio</div>
-              <div class="ni"><span class="nic">👥</span>Clientes</div>
-              <div class="ni"><span class="nic">🏦</span>Préstamos</div>
-              <div class="ni act"><span class="nic">💳</span>Personal</div>
-              <div class="ni"><span class="nic">📊</span>Reportes</div>
-            </div>
-          </div>
 
-          <!-- S5: Presupuesto — entra deslizando desde abajo -->
-          <div class="scr s5" id="sc4">
-            <div class="s5-tabs">
-              <div class="s5-tab">Gastos</div>
-              <div class="s5-tab">Deudas</div>
-              <div class="s5-tab on">Presupuesto</div>
-            </div>
-            <div class="s5-hd">
-              <div class="s5-ht">
-                <div class="s5-date">Hoy, 12 de mayo</div>
-                <div class="s5-days">20 días restantes</div>
+            <!-- S4: Deudas -->
+            <div class="scr s4" id="sc3">
+              <div class="s4-tabs">
+                <div class="s4-tab">Gastos</div><div class="s4-tab on">Deudas</div><div class="s4-tab">Presupuesto</div>
               </div>
-              <div class="s5-kpis">
-                <div class="s5-ki"><span class="s5-kic">💳</span><span class="s5-kv">2.000.000 $</span><span class="s5-kl">Total límite</span></div>
-                <div class="s5-ki"><span class="s5-kic">↓</span><span class="s5-kv">1.850.000 $</span><span class="s5-kl">Gastado</span></div>
-                <div class="s5-ki"><span class="s5-kic">🐷</span><span class="s5-kv">150.000 $</span><span class="s5-kl">Disponible</span></div>
+              <div class="s4-ttl">Mis deudas</div>
+              <div class="s4-total"><div class="s4-tl">Total que debes</div><div class="s4-tv">37.500 $</div></div>
+              <div class="s4-items">
+                <div class="s4-item"><div class="s4-ico">🏦</div><div><div class="s4-iname">20000</div><div class="s4-isub">Préstamo • 17.500 $</div></div><div class="s4-iamt">17.500 $</div></div>
+                <div class="s4-item"><div class="s4-ico">💵</div><div><div class="s4-iname">Arriendo</div><div class="s4-isub">Otro • 0 $</div></div><div class="s4-iamt">0 $</div></div>
+                <div class="s4-item"><div class="s4-ico">💵</div><div><div class="s4-iname">Si</div><div class="s4-isub">Otro • 20.000 $</div></div><div class="s4-iamt">20.000 $</div></div>
+              </div>
+              <div class="nav">
+                <div class="ni"><span class="nic">🏠</span>Inicio</div><div class="ni"><span class="nic">👥</span>Clientes</div>
+                <div class="ni"><span class="nic">🏦</span>Préstamos</div><div class="ni act"><span class="nic">💳</span>Personal</div>
+                <div class="ni"><span class="nic">📊</span>Reportes</div>
               </div>
             </div>
-            <div class="s5-chart">
-              <div class="s5-ct">1.850.000 $</div>
-              <div class="s5-cs">gastado</div>
-              <div class="s5-bar"><div class="s5-bf">92%</div></div>
-              <div class="s5-cb">150.000 $ disponible</div>
-            </div>
-            <div class="s5-nav">
-              <div class="ni"><span class="nic">🏠</span>Inicio</div>
-              <div class="ni"><span class="nic">👥</span>Clientes</div>
-              <div class="ni"><span class="nic">🏦</span>Préstamos</div>
-              <div class="ni act"><span class="nic">💳</span>Personal</div>
-              <div class="ni"><span class="nic">📊</span>Reportes</div>
-            </div>
-          </div>
 
+            <!-- S5: Presupuesto -->
+            <div class="scr s5" id="sc4">
+              <div class="s5-tabs">
+                <div class="s5-tab">Gastos</div><div class="s5-tab">Deudas</div><div class="s5-tab on">Presupuesto</div>
+              </div>
+              <div class="s5-hd">
+                <div class="s5-ht"><div class="s5-date">Hoy, 12 de mayo</div><div class="s5-days">20 días restantes</div></div>
+                <div class="s5-kpis">
+                  <div class="s5-ki"><span class="s5-kic">💳</span><span class="s5-kv">2.000.000 $</span><span class="s5-kl">Total límite</span></div>
+                  <div class="s5-ki"><span class="s5-kic">↓</span><span class="s5-kv">1.850.000 $</span><span class="s5-kl">Gastado</span></div>
+                  <div class="s5-ki"><span class="s5-kic">🐷</span><span class="s5-kv">150.000 $</span><span class="s5-kl">Disponible</span></div>
+                </div>
+              </div>
+              <div class="s5-chart">
+                <div class="s5-ct">1.850.000 $</div><div class="s5-cs">gastado</div>
+                <div class="s5-bar"><div class="s5-bf">92%</div></div>
+                <div class="s5-cb">150.000 $ disponible</div>
+              </div>
+              <div class="nav">
+                <div class="ni"><span class="nic">🏠</span>Inicio</div><div class="ni"><span class="nic">👥</span>Clientes</div>
+                <div class="ni"><span class="nic">🏦</span>Préstamos</div><div class="ni act"><span class="nic">💳</span>Personal</div>
+                <div class="ni"><span class="nic">📊</span>Reportes</div>
+              </div>
+            </div>
+
+          </div><!-- /screens -->
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </div><!-- /phone-wrap -->
+
+    <!-- ── HORIZONTAL SCROLL TRACK ── -->
+    <div class="track-wrap">
+      <div class="track" id="track">
+
+        <!-- Card 1: Dashboard -->
+        <div class="tcard on" data-i="0">
+          <div class="tc-top" style="background:linear-gradient(160deg,#0d3d32,#091e18)"></div>
+          <div class="tc-body" style="background:#000">
+            <div class="tc-cell" style="background:#2563eb"></div>
+            <div class="tc-cell" style="background:#ea580c"></div>
+            <div class="tc-cell" style="background:#059669"></div>
+            <div class="tc-cell" style="background:#0d9488"></div>
+          </div>
+          <span class="tc-label">Inicio</span>
+        </div>
+
+        <!-- Card 2: Mes -->
+        <div class="tcard" data-i="1">
+          <div class="tc-top" style="background:linear-gradient(160deg,#0b3028,#071c16)"></div>
+          <div class="tc-body" style="background:linear-gradient(180deg,#071c16,#04110e);display:flex;flex-direction:column;justify-content:center;padding:4px 5px;gap:3px">
+            <div style="height:6px;background:rgba(255,255,255,.15);border-radius:2px;width:70%"></div>
+            <div style="height:10px;background:rgba(255,255,255,.3);border-radius:2px"></div>
+            <div style="height:4px;background:#ef4444;border-radius:2px"></div>
+          </div>
+          <span class="tc-label">Mes</span>
+        </div>
+
+        <!-- Card 3: Préstamos -->
+        <div class="tcard" data-i="2">
+          <div class="tc-top" style="background:linear-gradient(160deg,#0b3028,#071c16)"></div>
+          <div class="tc-body" style="background:linear-gradient(180deg,#071c16,#04110e);display:grid;grid-template-columns:1fr 1fr;gap:3px;padding:4px">
+            <div style="background:rgba(255,255,255,.07);border-radius:4px"></div>
+            <div style="background:rgba(255,255,255,.07);border-radius:4px"></div>
+          </div>
+          <span class="tc-label">Préstamos</span>
+        </div>
+
+        <!-- Card 4: Deudas -->
+        <div class="tcard" data-i="3">
+          <div class="tc-top" style="background:#111;display:flex;align-items:center;justify-content:center">
+            <div style="width:80%;height:60%;background:linear-gradient(135deg,#7f1d1d,#991b1b);border-radius:4px"></div>
+          </div>
+          <div class="tc-body" style="background:#000;display:flex;flex-direction:column;gap:2px;justify-content:center;padding:3px 4px">
+            <div style="height:8px;background:#1a1a1a;border-radius:3px"></div>
+            <div style="height:8px;background:#1a1a1a;border-radius:3px"></div>
+            <div style="height:8px;background:#1a1a1a;border-radius:3px"></div>
+          </div>
+          <span class="tc-label">Deudas</span>
+        </div>
+
+        <!-- Card 5: Presupuesto -->
+        <div class="tcard" data-i="4">
+          <div class="tc-top" style="background:var(--teal-d)"></div>
+          <div class="tc-body" style="background:#000;display:flex;align-items:flex-end;justify-content:center;padding-bottom:4px">
+            <div style="width:22px;height:50px;background:linear-gradient(180deg,#f87171,#991b1b);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:7px;color:#fff;font-weight:700">92%</div>
+          </div>
+          <span class="tc-label">Presupuesto</span>
+        </div>
+
+      </div>
+    </div><!-- /track-wrap -->
+
+  </div><!-- /right-col -->
+</div><!-- /scene -->
 
 <script>
-// ── Particles ──
+// ── Particles
 (function(){
   const c=document.getElementById('pts');
   function spawn(){
@@ -546,9 +481,9 @@ h1 em{font-style:normal;color:var(--teal)}
   for(let i=0;i<14;i++)spawn();setInterval(spawn,900);
 })();
 
-// ── Phone 3D ──
+// ── Phone 3D idle sway + transitions
 const phone=document.getElementById('phone');
-const isMob=window.innerWidth<=820;
+const isMob=window.innerWidth<=860;
 const angles=isMob
   ?[{y:0,x:0},{y:3,x:-1},{y:-2,x:1},{y:4,x:-2},{y:-3,x:1}]
   :[{y:-14,x:4},{y:12,x:-4},{y:-11,x:3},{y:13,x:-5},{y:-10,x:3}];
@@ -556,18 +491,14 @@ const amp=isMob?1.5:5;
 let tY=angles[0].y,tX=angles[0].x,cY=angles[0].y,cX=angles[0].x;
 let fY=tY,fX=tX,trans=false,tStart=null,idleT=0,last=null,running=false;
 const TDUR=950;
-
 function lerp(a,b,t){return a+(b-a)*t}
-function easeElastic(t){if(t<=0)return 0;if(t>=1)return 1;return Math.pow(2,-10*t)*Math.sin((t*10-0.75)*(2*Math.PI/3))+1}
+function easeEl(t){if(t<=0)return 0;if(t>=1)return 1;return Math.pow(2,-10*t)*Math.sin((t*10-0.75)*(2*Math.PI/3))+1}
 function easeBack(t){const c=2.70158;return 1+(c+1)*Math.pow(t-1,3)+c*Math.pow(t-1,2)}
-
 function tick(ts){
-  if(!last)last=ts;
-  const dt=ts-last;last=ts;
-  let ry,rx;
+  if(!last)last=ts;const dt=ts-last;last=ts;let ry,rx;
   if(trans&&tStart!==null){
     const p=Math.min((ts-tStart)/TDUR,1);
-    ry=lerp(fY,tY,easeElastic(p));rx=lerp(fX,tX,easeBack(Math.min(p*1.2,1)));
+    ry=lerp(fY,tY,easeEl(p));rx=lerp(fX,tX,easeBack(Math.min(p*1.2,1)));
     cY=ry;cX=rx;if(p>=1){trans=false;cY=tY;cX=tX;}
   } else {
     idleT+=dt*.001;
@@ -579,36 +510,72 @@ function tick(ts){
 }
 function startJS(){if(running)return;running=true;requestAnimationFrame(tick);}
 phone.addEventListener('animationend',startJS,{once:true});
-setTimeout(startJS,1900);
+setTimeout(startJS,2200);
 
-// ── Carousel ──
+// ── Carousel
 const TOTAL=5;
 const ANIMS=['a-l','a-z','a-r','a-f','a-u'];
 const promos=[0,1,2,3,4].map(i=>document.getElementById('p'+i));
 const scrns =[0,1,2,3,4].map(i=>document.getElementById('sc'+i));
-const dots  =[0,1,2,3,4].map(i=>document.getElementById('d'+i));
-let cur=0;
+const dotEls=[0,1,2,3,4].map(i=>document.getElementById('d'+i));
+const track  =document.getElementById('track');
+const tcards =[...track.querySelectorAll('.tcard')];
+let cur=0,autoPlay=true;
 
-function goTo(next){
+function scrollTrackTo(i){
+  const card=tcards[i];
+  const cardCx=card.offsetLeft+card.offsetWidth/2;
+  const trackCx=track.offsetWidth/2;
+  track.scrollTo({left:cardCx-trackCx,behavior:'smooth'});
+}
+
+function goTo(next,fromScroll=false){
+  if(next===cur)return;
   const prev=cur;cur=next;
-  // Exit
+  // screen
   scrns[prev].classList.remove('show');
   ANIMS.forEach(a=>scrns[prev].classList.remove(a));
-  // Enter — force reflow so animation re-triggers
-  setTimeout(()=>{
-    void scrns[next].offsetWidth;
-    scrns[next].classList.add('show',ANIMS[next]);
-  },210);
-  // Text
+  setTimeout(()=>{void scrns[next].offsetWidth;scrns[next].classList.add('show',ANIMS[next]);},210);
+  // text
   promos[prev].classList.remove('in');promos[prev].classList.add('out');
   setTimeout(()=>{promos[prev].classList.remove('out');promos[next].classList.add('in');},460);
-  // Dots
-  dots[prev].classList.remove('on');dots[next].classList.add('on');
-  // Phone rotation
+  // dots
+  dotEls[prev].classList.remove('on');dotEls[next].classList.add('on');
+  // track cards
+  tcards[prev].classList.remove('on');tcards[next].classList.add('on');
+  // auto-scroll track if not triggered by scroll
+  if(!fromScroll)scrollTrackTo(next);
+  // phone rotation
   fY=cY;fX=cX;tY=angles[next].y;tX=angles[next].x;
   trans=true;tStart=performance.now();last=performance.now();
 }
-setTimeout(()=>setInterval(()=>goTo((cur+1)%TOTAL),3000),2800);
+
+// Track scroll detection
+let scrollTimer;
+track.addEventListener('scroll',()=>{
+  autoPlay=false; // pause auto when user interacts
+  clearTimeout(scrollTimer);
+  scrollTimer=setTimeout(()=>{
+    const trackCx=track.scrollLeft+track.offsetWidth/2;
+    let best=0,minD=Infinity;
+    tcards.forEach((c,i)=>{
+      const cx=c.offsetLeft+c.offsetWidth/2;
+      const d=Math.abs(trackCx-cx);
+      if(d<minD){minD=d;best=i;}
+    });
+    goTo(best,true);
+    // resume auto after 6s idle
+    setTimeout(()=>autoPlay=true,6000);
+  },120);
+});
+
+// Track card click
+tcards.forEach((c,i)=>c.addEventListener('click',()=>{autoPlay=false;goTo(i);setTimeout(()=>autoPlay=true,6000);}));
+
+// Auto-advance
+setInterval(()=>{if(autoPlay)goTo((cur+1)%TOTAL);},3000);
+// Init track position
+setTimeout(()=>scrollTrackTo(0),100);
 </script>
 </body>
 </html>
